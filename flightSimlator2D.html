@@ -1,0 +1,169 @@
+  <!DOCTYPE html>
+<html>
+<head>
+<style>
+#bg{
+    position: relative;
+	background-image: url(img/1.png);
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	margin: auto;
+	margin-top: 0px;
+	width: 1350px;
+    height: 600px;
+	animation-name: example;
+    animation-duration: 50s;
+	animation-iteration-count: infinite;
+	-webkit-animation-name: example;
+    -webkit-animation-duration: 50s;
+	-webkit-animation-iteration-count: infinite;
+}
+#plane{
+	position: absolute;
+	top: 250px;
+	right: 0;
+	bottom: 0;
+	left: 50px;
+	z-index: 10;
+}
+#worm1{
+	position: absolute;
+	top: 100px;
+	right: 0;
+	bottom: 0;
+	left: 1000px;
+	z-index: 5;
+}
+#worm2{
+	position: absolute;
+	top: 400px;
+	right: 0;
+	bottom: 0;
+	left: 1000px;
+	z-index: 5;
+}
+#worm3{
+	position: absolute;
+	top: 250px;
+	right: 0;
+	bottom: 0;
+	left: 1000px;
+	z-index: 5;
+}
+
+@keyframes example {
+	from {background-position: 0px 0px;}
+	to 	 {background-position: -1000px 0px; }
+}
+@-webkit-keyframes example {
+	from {background-position: 0px 0px;}
+	to 	 {background-position: -1000px 0px; }
+}
+
+@keyframes enemy {
+	0%   {left: 1300px;}
+    100% {left: -100px;}
+}
+@-webkit-keyframes enemy {
+	0%   {left: 1300px;}
+    100% {left: -100px;}
+}
+
+</style>
+</head>
+<body>
+
+<hr>
+<div id="bg">
+</div>
+
+<div id="plane">
+	<img src="img/2.png" style="width:100px;height:50px;">
+</div>
+
+<div id="worm1">
+	<img src="img/3.png" style="width:100px;height:50px;">
+</div>
+<div id="worm2">
+	<img src="img/3.png" style="width:100px;height:50px;">
+</div>
+<div id="worm3">
+	<img src="img/3.png" style="width:100px;height:50px;">
+</div>
+
+<hr>
+
+<script>
+
+	var y = document.getElementById("plane");
+	y.style.left = "50px";
+	y.style.top = "250px";
+document.addEventListener('keydown', function(event) {
+    if(event.keyCode == 38) {
+		if (parseInt(y.style.top) > 10) {
+			y.style.top = parseInt(y.style.top) - 10 + 'px';
+		}
+    }
+    else if(event.keyCode == 40) {
+		if (parseInt(y.style.top) < 570) {
+			y.style.top = parseInt(y.style.top) + 10 + 'px';
+		}
+    }
+});
+	var left1 = Math.floor((Math.random()*550)+800);
+	var top1 = Math.floor((Math.random()*550)+20);
+	var left2 = Math.floor((Math.random()*500)+800);
+	var top2 = Math.floor((Math.random()*550)+20);
+	var left3 = Math.floor((Math.random()*500)+800);
+	var top3 = Math.floor((Math.random()*550)+20);
+	var w1 = document.getElementById("worm1");
+	var w2 = document.getElementById("worm2");
+	var w3 = document.getElementById("worm3");
+	doMove();
+	function doMove() {
+		 // pseudo-property code: Move right by 10px
+		w1.style.left=left1+'px';
+		w1.style.top=top1+'px';
+		w2.style.left=left2+'px';
+		w2.style.top=top2+'px';
+		w3.style.left=left3+'px';
+		w3.style.top=top3+'px';
+		left1=left1-(Math.floor((Math.random()*10)+10));
+		left2=left2-(Math.floor((Math.random()*5)+10));
+		left3=left3-(Math.floor((Math.random()*15)+10));
+		
+		var flag1 = (parseInt(y.style.left) < left1-75 || parseInt(y.style.top) < top1-50 || parseInt(y.style.top) > top1+50);
+		var flag2 = (parseInt(y.style.left) < left2-75 || parseInt(y.style.top) < top2-50 || parseInt(y.style.top) > top2+50);
+		var flag3 = (parseInt(y.style.left) < left3-75 || parseInt(y.style.top) < top3-50 || parseInt(y.style.top) > top3+50);
+		
+		if (flag1 && flag2 && flag3) {
+			setTimeout(function(){
+					if(left1 < 10) {
+						left1 = Math.floor((Math.random()*500)+800);
+						top1 = Math.floor((Math.random()*550)+20);
+					}
+					if(left2 < 10) {
+						left2 = Math.floor((Math.random()*500)+800);
+						top2 = Math.floor((Math.random()*550)+20);
+					}
+					if(left3 < 10) {
+						left3 = Math.floor((Math.random()*500)+800);
+						top3 = Math.floor((Math.random()*550)+20);
+					}
+					doMove();
+			},70);	
+		}
+		else {
+			var bg = document.getElementById("bg");
+			bg.style.webkitAnimationPlayState = "paused";
+			alert("G A M E O V E R")
+		}
+	}
+	/*
+*/
+</script>
+
+</body>
+</html>
